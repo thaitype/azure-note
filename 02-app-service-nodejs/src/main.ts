@@ -5,6 +5,8 @@ import helmet from 'helmet';
 import compression from 'compression';
 import { config } from './config.js';
 
+console.log(`Running using port ${config.port}`);
+
 const app = express();
 
 app.use(morgan('combined'));

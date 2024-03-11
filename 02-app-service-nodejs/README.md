@@ -2,10 +2,12 @@
 
 ## How to deploy
 
-```
+```bash
 cd 02-app-service-nodejs
 zip release.zip ./* -r
-az webapp deploy --resource-group rg-azure-note-ep2 --name thaitype-azure-note-ep2 --src-path ./release.zip --type zip --async true
+# az webapp deploy --resource-group rg-azure-note-ep2 --name thaitype-azure-note-ep2 --src-path ./release.zip --type zip --async true
+az webapp config appsettings set --resource-group rg-azure-note-ep2 --name thaitype-azure-note-ep2 --settings WEBSITE_RUN_FROM_PACKAGE="1"
+az webapp deployment source config-zip --resource-group rg-azure-note-ep2 --name thaitype-azure-note-ep2 --src /release.zip
 ```
 
 ## How to cancel deployment
