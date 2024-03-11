@@ -53,6 +53,7 @@ jobs:
         with:
           name: ${{ env.PACKAGE_NAME }}
           path: ${{ env.WORKING_DIRECTORY }}/${{ env.PACKAGE_PATH }}
+          retention-days: 1
 
   deploy:
     runs-on: ubuntu-latest
