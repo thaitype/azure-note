@@ -10,6 +10,7 @@ on:
   workflow_dispatch:
 
 env:
+  WORKING_DIRECTORY: './02-app-service-nodejs'
   AZURE_WEBAPP_NAME: 'thaitype-azure-note-ep2'
   AZURE_PUBLISH_PROFILE: ${{ secrets.path__02_app_service_nodejs_target__AZURE_WEBAPP_PUBLISH_PROFILE_thaitype_azure_note_ep2 }}
   PACKAGE_NAME: 'node-app'
@@ -33,21 +34,25 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'pnpm'
+          cache-dependency-path: '${{ env.WORKING_DIRECTORY }}/pnpm-lock.yaml'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+        working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Build
         run: pnpm build
+        working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Zip artifact for deployment
         run: zip ${{ env.PACKAGE_PATH }} ./* -r
+        working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PACKAGE_NAME }}
-          path:  ${{ env.PACKAGE_PATH }}
+          path: ${{ env.WORKING_DIRECTORY }}/${{ env.PACKAGE_PATH }}
 
   deploy:
     runs-on: ubuntu-latest
