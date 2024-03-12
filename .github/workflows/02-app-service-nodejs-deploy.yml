@@ -16,7 +16,7 @@ env:
   PACKAGE_NAME: 'node-app'
   PACKAGE_PATH: 'release.zip'
   NODE_VERSION: '20'
-  PNPM_VERSION: '8'
+  # PNPM_VERSION: '8'
 
 jobs:
   build:
@@ -25,23 +25,23 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v3
-        with:
-          version: ${{ env.PNPM_VERSION }}
+      # - uses: pnpm/action-setup@v3
+      #   with:
+      #     version: ${{ env.PNPM_VERSION }}
 
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-          cache-dependency-path: '${{ env.WORKING_DIRECTORY }}/pnpm-lock.yaml'
+          cache: 'npm'
+          cache-dependency-path: '${{ env.WORKING_DIRECTORY }}/package-lock.json'
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm install --production
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Build
-        run: pnpm build
+        run: npm run build
         working-directory: ${{ env.WORKING_DIRECTORY }}
 
       - name: Zip artifact for deployment
