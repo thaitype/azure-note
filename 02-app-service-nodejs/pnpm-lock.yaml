@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  body-parser:
+    specifier: ^1.20.2
+    version: 1.20.2
   compression:
     specifier: ^1.7.4
     version: 1.7.4
