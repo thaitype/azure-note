@@ -4,9 +4,6 @@
 # name: 02-app-service-nodejs-deploy
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 env:
